@@ -1,0 +1,11 @@
+@Desafio_Fabrica_Pedidos_Back_HostAddress = http://localhost:8080
+
+GET {{Desafio_Fabrica_Pedidos_Back_HostAddress}}/weatherforecast/
+Accept: application/json
+Data: {
+  "PedidoId": "guid-do-pedido",
+  "Status": "Confirmado",
+  "Observacoes": "Pedido aprovado",
+  "DataProcessamento": "2025-06-07T10:00:00Z"
+}
+###
