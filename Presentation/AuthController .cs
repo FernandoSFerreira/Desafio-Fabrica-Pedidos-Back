@@ -6,11 +6,14 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using BCrypt.Net;
 using Desafio_Fabrica_Pedidos_Back.Security.Interfaces;
+using Desafio_Fabrica_Pedidos_Back.Domain.DTOs.AuthDTOs.Request;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Desafio_Fabrica_Pedidos_Back.Presentation
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Produces("application/json")]
     public class AuthController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
@@ -29,10 +32,10 @@ namespace Desafio_Fabrica_Pedidos_Back.Presentation
         /// <param name="password"></param>
         /// <returns></returns>
         [HttpPost("login")]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(password, "$2a$12$tZ0PbBRMMcEohEnF0NBVge", false, hashType: HashType.SHA512);
-            var usuario = await _usuarioService.ObterUsuarioPorUsernameAsync(username);
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(loginRequest.Password, "$2a$12$tZ0PbBRMMcEohEnF0NBVge", false, hashType: HashType.SHA512);
+            var usuario = await _usuarioService.ObterUsuarioPorUsernameAsync(loginRequest.UserName);
 
             if (usuario == null || usuario.PasswordHash != passwordHash) // Compare com o hash armazenado!
             {

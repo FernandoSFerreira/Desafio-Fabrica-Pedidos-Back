@@ -18,14 +18,29 @@ namespace Desafio_Fabrica_Pedidos_Back.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     RevendaId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DataPedido = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DataConfirmacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DataPedido = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DataConfirmacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     Status = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Observacoes = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pedidos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PedidoTriagemMessage",
+                columns: table => new
+                {
+                    PedidoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RevendaId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DataPedido = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    QuantidadeTotal = table.Column<decimal>(type: "numeric", nullable: false),
+                    ValorTotal = table.Column<decimal>(type: "numeric", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PedidoTriagemMessage", x => x.PedidoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,6 +88,26 @@ namespace Desafio_Fabrica_Pedidos_Back.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ItemTriagemMessage",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProdutoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Quantidade = table.Column<decimal>(type: "numeric", nullable: false),
+                    PrecoUnitario = table.Column<decimal>(type: "numeric", nullable: false),
+                    PedidoTriagemMessagePedidoId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemTriagemMessage", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItemTriagemMessage_PedidoTriagemMessage_PedidoTriagemMessag~",
+                        column: x => x.PedidoTriagemMessagePedidoId,
+                        principalTable: "PedidoTriagemMessage",
+                        principalColumn: "PedidoId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ItensPedidos",
                 columns: table => new
                 {
@@ -100,6 +135,11 @@ namespace Desafio_Fabrica_Pedidos_Back.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ItemTriagemMessage_PedidoTriagemMessagePedidoId",
+                table: "ItemTriagemMessage",
+                column: "PedidoTriagemMessagePedidoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ItensPedidos_PedidoId",
                 table: "ItensPedidos",
                 column: "PedidoId");
@@ -114,6 +154,9 @@ namespace Desafio_Fabrica_Pedidos_Back.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ItemTriagemMessage");
+
+            migrationBuilder.DropTable(
                 name: "ItensPedidos");
 
             migrationBuilder.DropTable(
@@ -121,6 +164,9 @@ namespace Desafio_Fabrica_Pedidos_Back.Migrations
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "PedidoTriagemMessage");
 
             migrationBuilder.DropTable(
                 name: "Pedidos");

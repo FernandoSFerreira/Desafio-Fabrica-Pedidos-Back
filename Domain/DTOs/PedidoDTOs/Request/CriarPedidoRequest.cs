@@ -11,5 +11,7 @@ namespace Desafio_Fabrica_Pedidos_Back.Domain.DTOs.PedidoDTOs.Request
         [Required(ErrorMessage = "Itens são obrigatórios")]
         [MinLength(1, ErrorMessage = "Deve haver pelo menos um item no pedido")]
         public List<CriarItemPedidoRequest> Itens { get; set; } = new List<CriarItemPedidoRequest>();
+
+        public string? Observacoes { get; set; }
     }
 }

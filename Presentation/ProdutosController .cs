@@ -8,7 +8,8 @@ namespace Desafio_Fabrica_Pedidos_Back.Presentation
 {
     [ApiController]
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
     public class ProdutosController : ControllerBase
     {
         private readonly IProdutoService _produtoService;
@@ -78,7 +79,7 @@ namespace Desafio_Fabrica_Pedidos_Back.Presentation
         /// </summary>
         /// <param name="produto"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> AtualizarProduto([FromBody] Produto produto)
         {
             try

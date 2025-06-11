@@ -8,7 +8,8 @@ namespace Desafio_Fabrica_Pedidos_Back.Presentation
 {
     [ApiController]
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
     public class RevendasController : ControllerBase
     {
         private readonly IRevendaService _revendaService;

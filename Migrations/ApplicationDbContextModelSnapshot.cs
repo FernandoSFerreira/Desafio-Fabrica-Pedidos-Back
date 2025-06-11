@@ -50,6 +50,31 @@ namespace Desafio_Fabrica_Pedidos_Back.Migrations
                     b.ToTable("ItensPedidos");
                 });
 
+            modelBuilder.Entity("Desafio_Fabrica_Pedidos_Back.Domain.Entities.ItemTriagemMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("PedidoTriagemMessagePedidoId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("PrecoUnitario")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("ProdutoId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Quantidade")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PedidoTriagemMessagePedidoId");
+
+                    b.ToTable("ItemTriagemMessage");
+                });
+
             modelBuilder.Entity("Desafio_Fabrica_Pedidos_Back.Domain.Entities.Pedido", b =>
                 {
                     b.Property<Guid>("Id")
@@ -57,10 +82,10 @@ namespace Desafio_Fabrica_Pedidos_Back.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DataConfirmacao")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataPedido")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Observacoes")
                         .IsRequired()
@@ -78,6 +103,29 @@ namespace Desafio_Fabrica_Pedidos_Back.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pedidos");
+                });
+
+            modelBuilder.Entity("Desafio_Fabrica_Pedidos_Back.Domain.Entities.PedidoTriagemMessage", b =>
+                {
+                    b.Property<Guid>("PedidoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DataPedido")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal>("QuantidadeTotal")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("RevendaId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("ValorTotal")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("PedidoId");
+
+                    b.ToTable("PedidoTriagemMessage");
                 });
 
             modelBuilder.Entity("Desafio_Fabrica_Pedidos_Back.Domain.Entities.Produto", b =>
@@ -175,7 +223,19 @@ namespace Desafio_Fabrica_Pedidos_Back.Migrations
                     b.Navigation("Produto");
                 });
 
+            modelBuilder.Entity("Desafio_Fabrica_Pedidos_Back.Domain.Entities.ItemTriagemMessage", b =>
+                {
+                    b.HasOne("Desafio_Fabrica_Pedidos_Back.Domain.Entities.PedidoTriagemMessage", null)
+                        .WithMany("Itens")
+                        .HasForeignKey("PedidoTriagemMessagePedidoId");
+                });
+
             modelBuilder.Entity("Desafio_Fabrica_Pedidos_Back.Domain.Entities.Pedido", b =>
+                {
+                    b.Navigation("Itens");
+                });
+
+            modelBuilder.Entity("Desafio_Fabrica_Pedidos_Back.Domain.Entities.PedidoTriagemMessage", b =>
                 {
                     b.Navigation("Itens");
                 });

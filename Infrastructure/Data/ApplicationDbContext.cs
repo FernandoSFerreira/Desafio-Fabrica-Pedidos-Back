@@ -25,17 +25,28 @@ namespace Desafio_Fabrica_Pedidos_Back.Infrastructure.Data
                 .WithOne(i => i.Pedido)
                 .HasForeignKey(i => i.PedidoId)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Pedido>()
+                .Property(p => p.DataPedido)
+                .HasColumnType("timestamp without time zone");
+
+            modelBuilder.Entity<Pedido>()
+                .Property(p => p.DataConfirmacao)
+                .HasColumnType("timestamp without time zone");
 
             modelBuilder.Entity<ItemPedido>()
                 .HasOne(i => i.Produto)
                 .WithMany(p => p.Itens) 
                 .HasForeignKey(i => i.ProdutoId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PedidoTriagemMessage>()
+                .Property(p => p.DataPedido)
+                .HasColumnType("timestamp without time zone");
         }
 
         public async Task SeedAsync()
         {
-            await UsuarioSeeder.Seed(this); // Chama o seeder aqui
+            await DatabaseSeeder.SeedAll(this); // Chama o seeder para popular o banco de dados
         }
     }
 }

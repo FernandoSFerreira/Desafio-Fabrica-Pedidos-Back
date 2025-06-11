@@ -5,7 +5,7 @@ Este repositório contém a implementação do backend para o desafio de fábrica de 
 ## Tecnologias Utilizadas:
 
 *   **Linguagem:** C# (.NET 8)
-*   **Framework Web:** ASP.NET Core MVC
+*   **Clean Code/DDD:** Estrutura Clean Code e Domain-Driven Design (DDD) para organização do código e separação de responsabilidades.
 *   **ORM:** Entity Framework Core (EF Core)
 *   **Banco de Dados:** PostgreSQL (usando Docker para isolamento e portabilidade)
 *   **Logging:** Serilog (com integração com o console e, potencialmente, outros sinks como arquivos ou serviços de monitoramento)

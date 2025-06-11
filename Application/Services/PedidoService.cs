@@ -36,6 +36,7 @@ namespace Desafio_Fabrica_Pedidos_Back.Application.Services
             // Criar novo pedido com ID gerado
             var novoPedido = new Pedido
             {
+                Observacoes = pedido.Observacoes,
                 RevendaId = pedido.RevendaId,
                 DataPedido = DateTime.Now,
                 Status = "Pendente",

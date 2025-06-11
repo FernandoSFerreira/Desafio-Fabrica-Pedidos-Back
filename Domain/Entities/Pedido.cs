@@ -19,10 +19,10 @@ namespace Desafio_Fabrica_Pedidos_Back.Domain.Entities
 
         [Required]
         [MaxLength(50)]
-        public string Status { get; set; } = "Pendente"; // Status do pedido (Pendente, Confirmado, Cancelado)
+        public string Status { get; set; } = "Pendente"; // Status do pedido (Pendente, Confirmado, Cancelado, Em Processamento, Enviado)
 
         [MaxLength(500)]
-        public string Observacoes { get; set; } // Observações adicionais sobre o pedido
+        public string? Observacoes { get; set; } // Observações adicionais sobre o pedido
 
         // Propriedade para calcular o valor total do pedido (para validação)
         public decimal ValorTotal => Itens?.Sum(i => i.Quantidade * i.PrecoUnitario) ?? 0;

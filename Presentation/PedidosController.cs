@@ -49,6 +49,7 @@ namespace Desafio_Fabrica_Pedidos_Back.Presentation
 
                 var pedido = new Pedido
                 {
+                    Observacoes = request.Observacoes,
                     RevendaId = request.RevendaId,
                     Itens = request.Itens.Select(i => new ItemPedido
                     {
@@ -212,7 +213,7 @@ namespace Desafio_Fabrica_Pedidos_Back.Presentation
         /// Obtém todos os pedidos do sistema
         /// </summary>
         /// <returns>Lista de todos os pedidos</returns>
-        [HttpGet]
+        [HttpGet("pendentes")]
         [ProducesResponseType(typeof(List<PedidoResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ObterTodosPedidos()
@@ -276,7 +277,7 @@ namespace Desafio_Fabrica_Pedidos_Back.Presentation
         /// Lista todos os pedidos cadastrados no sistema
         /// </summary>
         /// <returns></returns>
-        [HttpGet("listarTodos")]
+        [HttpGet]
         [ProducesResponseType(typeof(List<PedidoResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListarTodosPedidos()
         {
